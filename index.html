@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ryan Behrens Art</title>
+<meta name="description" content="Ryan Behrens: matte paintings, 3D models, character design and traditional art.">
+<meta name="theme-color" content="#0D0B1A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ryan Behrens Art">
+<meta property="og:description" content="Matte paintings, 3D models, character design and traditional art.">
+<meta property="og:image" content="img/snow-raid.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230D0B1A'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-weight='900' font-size='30' text-anchor='middle' fill='%23FF3EA5'%3ERB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@500;700&family=Rubik:wght@400;500;700&display=swap">
+<style>
+/* Layout: a game launcher. Chunky arcade wordmark with a chromatic split, a featured "splash" painting,
+   then the work grouped by section like a level select. Cut-corner cards with a pink→cyan edge glow.
+   Deliberately single-theme (dark), so it looks the same everywhere. */
+:root{
+  color-scheme:dark;
+  --bg:#0D0B1A;        /* deep violet night */
+  --panel:#17142B;
+  --panel-2:#211C3D;
+  --line:#2E2852;
+  --text:#F3F0FF;
+  --dim:#A59FC9;
+  --pink:#FF3EA5;
+  --cyan:#3EE8FF;
+  --yellow:#FFE14D;
+  --f-display:"Dela Gothic One", "Arial Black", Impact, sans-serif;
+  --f-body:"Rubik", "Helvetica Neue", Arial, sans-serif;
+  --f-hud:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --cut:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--text);font:400 1rem/1.6 var(--f-body);-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(1200px 600px at 85% -10%, rgba(255,62,165,.16), transparent 60%),
+                   radial-gradient(900px 500px at -10% 20%, rgba(62,232,255,.10), transparent 60%);
+  background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.wrap{max-width:1400px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:720px){.wrap{padding-left:max(36px,env(safe-area-inset-left,0px));padding-right:max(36px,env(safe-area-inset-right,0px))}}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+.hud{font:700 .72rem/1 var(--f-hud);letter-spacing:.12em;text-transform:uppercase}
+
+/* ---------- sticky nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(13,11,26,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:16px;padding-block:12px}
+.logo{font:400 1.05rem/1 var(--f-display);text-decoration:none;display:grid;place-items:center;width:42px;height:42px;background:var(--pink);color:var(--bg);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));flex:none}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1}
+.nav ul::-webkit-scrollbar{display:none}
+.nav ul a{display:block;white-space:nowrap;text-decoration:none;padding:10px 12px;border-radius:6px;color:var(--dim)}
+.nav ul a:hover{color:var(--text);background:var(--panel)}
+.nav ul a b{color:var(--cyan);font-weight:700;margin-left:5px}
+.cta{flex:none;text-decoration:none;background:var(--yellow);color:var(--bg);padding:12px 16px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))}
+.cta:hover{background:var(--cyan)}
+@media (max-width:560px){.cta{display:none}}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:32px 48px;padding-block:clamp(28px,6vw,44px) clamp(36px,7vw,64px);align-items:center}
+.hero > *{min-width:0}
+.hero-text{container-type:inline-size}
+@media (min-width:980px){.hero{grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr)}}
+.tag{display:inline-flex;align-items:center;gap:10px;color:var(--cyan)}
+.tag::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+/* sized to its own column so the name can never run into the featured art */
+.name{font:400 2.6rem/.95 var(--f-display);font-size:clamp(2.2rem,15cqi,7rem);letter-spacing:-.01em;margin:16px 0 0;text-transform:uppercase;color:#FFFFFF}
+.name span{display:block}
+.roles{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;padding:0;list-style:none}
+.roles li{font:500 .95rem/1 var(--f-body);padding:10px 14px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px}
+.blurb{max-width:32rem;color:var(--dim);font-size:1.08rem;margin:20px 0 0}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.stat{background:var(--panel);border:1px solid var(--line);padding:12px 16px 10px;min-width:110px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+.stat strong{display:block;font:400 1.7rem/1 var(--f-display);color:var(--yellow);font-variant-numeric:tabular-nums}
+.stat span{color:var(--dim);font:700 .66rem/1.3 var(--f-hud);letter-spacing:.1em;text-transform:uppercase}
+
+.splash{margin:0;position:relative;cursor:zoom-in}
+.splash .frame{padding:3px;background:linear-gradient(135deg,var(--pink),var(--cyan));clip-path:polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,28px 100%,0 calc(100% - 28px));transition:transform .35s}
+.splash:hover .frame{transform:translateY(-3px)}
+.splash img{display:block;width:100%;height:auto;clip-path:polygon(0 0,calc(100% - 27px) 0,100% 27px,100% 100%,27px 100%,0 calc(100% - 27px))}
+.splash figcaption{display:flex;justify-content:space-between;gap:12px;margin-top:12px;color:var(--dim)}
+.splash figcaption b{color:var(--text);font:400 1.05rem/1 var(--f-display);letter-spacing:.01em;text-transform:none}
+.badge{position:absolute;top:16px;left:16px;background:var(--yellow);color:var(--bg);padding:8px 10px}
+
+/* ---------- sections ---------- */
+.sec{padding-block:56px 8px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px;margin-bottom:26px}
+.sec-head h2{font:400 clamp(2rem,5.5vw,3.6rem)/.95 var(--f-display);margin:0;text-transform:uppercase;letter-spacing:-.005em}
+.sec-head h2 em{font-style:normal;color:var(--pink)}
+.sec-head p{margin:6px 0 0;color:var(--dim);max-width:40rem}
+.sec-head .count{color:var(--cyan)}
+.sub{display:flex;align-items:center;gap:12px;margin:34px 0 18px;color:var(--yellow)}
+.sub::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.grid{columns:1;column-gap:20px}
+@media (min-width:620px){.grid{columns:2}}
+@media (min-width:1080px){.grid{columns:3}}
+.grid.wide{columns:1}
+@media (min-width:620px){.grid.wide{columns:2}}
+
+.card{break-inside:avoid;margin:0 0 22px;position:relative}
+.card > button{all:unset;display:block;width:100%;cursor:pointer;padding:2px;background:var(--line);
+  clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,var(--cut) 100%,0 calc(100% - var(--cut)));transition:background .25s,transform .25s}
+.card > button:hover,.card > button:focus-visible{background:linear-gradient(135deg,var(--pink),var(--cyan));transform:translateY(-3px)}
+.card > button:focus-visible{outline:none}
+.card .inner{background:var(--panel);clip-path:polygon(0 0,calc(100% - var(--cut) + 1px) 0,100% calc(var(--cut) - 1px),100% 100%,calc(var(--cut) - 1px) 100%,0 calc(100% - var(--cut) + 1px))}
+.card img{display:block;width:100%;height:auto;max-width:100%;transition:transform .5s}
+.card > button:hover img{transform:scale(1.025)}
+.card .media{overflow:hidden;position:relative}
+.card .light .media{background:#F4F2EE}
+.card .meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 14px 13px}
+.card h3{font:700 1.02rem/1.25 var(--f-body);margin:0}
+.card .kind{color:var(--dim);font:500 .7rem/1.3 var(--f-hud);letter-spacing:.06em;text-transform:uppercase;text-align:right}
+.card .stack{position:absolute;top:12px;right:12px;background:var(--bg);color:var(--cyan);border:1px solid var(--cyan);padding:7px 9px;display:flex;gap:7px;align-items:center}
+.card .stack::before{content:"";width:12px;height:10px;border:2px solid currentColor;box-shadow:3px -3px 0 -1px var(--bg),3px -3px 0 1px currentColor}
+.card .desc{padding:0 14px 14px;margin:-4px 0 0;color:var(--dim);font-size:.9rem;line-height:1.5}
+
+/* ---------- contact ---------- */
+.contact{margin-block:72px 40px;padding:3px;background:linear-gradient(120deg,var(--pink),var(--cyan));clip-path:polygon(0 0,calc(100% - 32px) 0,100% 32px,100% 100%,32px 100%,0 calc(100% - 32px))}
+.contact .in{background:var(--panel);padding:clamp(24px,5vw,56px);clip-path:inherit;display:grid;gap:28px}
+@media (min-width:900px){.contact .in{grid-template-columns:1.2fr 1fr;align-items:center}}
+.contact h2{font:400 clamp(2rem,5vw,3.4rem)/1 var(--f-display);text-transform:uppercase;margin:0}
+.contact h2 span{color:var(--yellow)}
+.contact p{color:var(--dim);margin:14px 0 0;max-width:34rem}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0}
+.skills div{background:var(--panel-2);border:1px solid var(--line);padding:14px}
+.skills dt{font:700 1rem/1.2 var(--f-body);margin-bottom:4px}
+.skills dd{margin:0;color:var(--dim);font:500 .74rem/1.5 var(--f-hud)}
+.reach{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:24px}
+.email{font:700 1rem/1 var(--f-hud);background:var(--bg);border:1px solid var(--line);padding:14px;user-select:all;word-break:break-all}
+.btn{font:700 .74rem/1 var(--f-hud);letter-spacing:.1em;text-transform:uppercase;padding:15px 18px;border:0;cursor:pointer;text-decoration:none;background:var(--pink);color:var(--bg);
+  clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px))}
+.btn:hover{background:var(--yellow)}
+.btn.alt{background:var(--panel-2);color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.alt:hover{background:var(--cyan);color:var(--bg)}
+footer{padding-block:8px 40px;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* ---------- viewer ---------- */
+dialog{border:0;padding:0;margin:0;width:100vw;height:100vh;max-width:none;max-height:none;background:rgba(8,6,16,.97);color:var(--text)}
+dialog::backdrop{background:transparent}
+.lb{display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100%;gap:10px;
+  padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(14px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px))}
+.lb-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.lb-title{min-width:0}
+.lb-title h3{font:400 clamp(1.1rem,3vw,1.6rem)/1.1 var(--f-display);margin:0;text-transform:uppercase}
+.lb-title .hud{color:var(--cyan);margin-top:6px;display:block}
+.lb-stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:0}
+.lb-stage img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.lb-bar{height:3px;background:var(--line);position:relative;max-width:900px;width:100%;margin:0 auto}
+.lb-bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--pink),var(--cyan));transition:width .25s}
+.lb-foot{display:grid;gap:10px;justify-items:center}
+.lb-note{color:var(--dim);text-align:center;max-width:46rem;margin:0;font-size:.95rem}
+.thumbs{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding:4px 2px;scrollbar-width:thin}
+.thumbs button{all:unset;cursor:pointer;flex:none;width:64px;height:44px;border:2px solid transparent;opacity:.55;background:var(--panel)}
+.thumbs button img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs button[aria-current="true"]{border-color:var(--pink);opacity:1}
+.thumbs button:hover{opacity:1}
+.thumbs button:focus-visible{outline:2px solid var(--yellow)}
+.ctl{font:700 .72rem/1 var(--f-hud);letter-spacing:.1em;text-transform:uppercase;background:var(--panel-2);color:var(--text);border:1px solid var(--line);padding:11px 14px;cursor:pointer}
+.ctl:hover{background:var(--pink);color:var(--bg);border-color:var(--pink)}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;padding:0;font-size:1.1rem;z-index:2}
+.arrow.prev{left:0}.arrow.next{right:0}
+
+/* ---------- phones ---------- */
+dialog{height:100dvh}
+.nav-contact{display:none}
+@media (max-width:560px){
+  body{background-attachment:scroll}
+  .nav .wrap{gap:10px;padding-block:10px}
+  .logo{width:38px;height:38px;font-size:.95rem}
+  .nav ul a{padding:9px 9px}
+  .nav-contact{display:list-item}
+  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .stat{min-width:0;padding:10px 10px 9px}
+  .stat strong{font-size:1.4rem}
+  .stat span{font-size:.6rem;letter-spacing:.06em}
+  .roles li{font-size:.85rem;padding:8px 12px}
+  .blurb{font-size:1rem}
+  .badge{top:10px;left:10px;padding:6px 8px}
+  .sec{padding-block:40px 4px}
+  .card{--cut:10px;margin-bottom:16px}
+  .contact{margin-block:48px 32px}
+  .reach .btn,.reach .email{flex:1 1 100%;text-align:center}
+  .arrow{width:40px;height:40px}
+  .lb-stage{padding-block:4px}
+}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Back to top">RB</a>
+    <ul class="hud" id="navlist"></ul>
+    <a class="cta hud" href="#contact">Hire me</a>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
+  <header class="hero">
+    <div class="hero-text">
+      <span class="tag hud">Open to work</span>
+      <h1 class="name"><span>Ryan</span><span>Behrens</span></h1>
+      <ul class="roles"><li>Matte painter</li><li>3D modeler</li><li>Illustrator</li><li>Animator</li></ul>
+      <p class="blurb">Worlds, vehicles and creatures for games and animation. Digital matte paintings and 3D models, built on years of drawing from life.</p>
+      <div class="stats" id="stats"></div>
+    </div>
+    <figure class="splash" id="splash">
+      <div class="frame"><img src="img/snow-raid.jpg" width="1800" height="990" alt="Digital matte painting of riders charging through a blizzard toward a burning wreck"></div>
+      <span class="badge hud">Featured</span>
+      <figcaption class="hud"><b>Snow Raid</b><span>Matte painting</span></figcaption>
+    </figure>
+  </header>
+
+  <main id="sections"></main>
+
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="in">
+      <div>
+        <h2 id="contact-title">Let's build <span>something</span></h2>
+        <p>Open to roles in games, animation and entertainment for younger audiences: environment painting, 3D modeling, character and prop design.</p>
+        <div class="reach">
+          <span class="email" id="email">ryansbehrens01@gmail.com</span>
+          <button class="btn" id="copy" type="button">Copy email</button>
+          <a class="btn alt" href="https://www.youtube.com/@DownsideDown" target="_blank" rel="noopener">YouTube ↗</a>
+        </div>
+      </div>
+      <dl class="skills">
+        <div><dt>Matte painting</dt><dd>Photoshop</dd></div>
+        <div><dt>3D</dt><dd>Maya, ZBrush</dd></div>
+        <div><dt>Animation</dt><dd>2D and 3D</dd></div>
+        <div><dt>Traditional</dt><dd>Life drawing, still life, oil</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <footer class="hud"><span>© Ryan Behrens</span><a href="#top">Back to top ↑</a></footer>
+</div>
+
+<dialog id="lb" aria-label="Artwork viewer">
+  <div class="lb">
+    <div class="lb-top">
+      <div class="lb-title"><h3 id="lb-title"></h3><span class="hud" id="lb-kind"></span></div>
+      <button type="button" class="ctl" id="lb-close">Close ✕</button>
+    </div>
+    <div class="lb-stage">
+      <button class="ctl arrow prev" type="button" id="lb-prev" aria-label="Previous image">←</button>
+      <img id="lb-img" alt="">
+      <button class="ctl arrow next" type="button" id="lb-next" aria-label="Next image">→</button>
+    </div>
+    <div class="lb-foot">
+      <div class="lb-bar"><i id="lb-prog"></i></div>
+      <p class="lb-note" id="lb-note"></p>
+      <div class="thumbs" id="lb-thumbs" hidden></div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+/* Each item is one card. Items with several images are projects: one card, all images inside the viewer. */
+const I = (src, alt) => ({src, alt});
+const SECTIONS = [
+  {id:"matte", nav:"Matte", title:"Matte <em>Paintings</em>", note:"Digital environment paintings: invented places, lit for mood.", layout:"wide", items:[
+    {t:"Snow Raid", k:"Matte painting", n:"Riders charge through a blizzard toward a burning wreck.", imgs:[I("snow-raid","Riders on vehicles charging across a snowy slope toward a wreck")]},
+    {t:"Dragon's Perch", k:"Matte painting", n:"A dragon breathes fire over a sea cliff.", imgs:[I("dragon-cliff","A dragon breathing fire over a rocky sea cliff")]},
+    {t:"Siege at Dusk", k:"Matte painting", n:"Walkers and gunships under a ringed moon, with a city on the far ridge.", imgs:[I("sky-4-3","Giant walker machines firing a beam across a valley at sunset")]},
+    {t:"Steam District", k:"Matte painting", n:"An industrial city of pipes, catwalks and furnaces.", imgs:[I("where-1","Dark industrial city full of pipes and smoke")]},
+    {t:"Swamp Witch", k:"Digital painting", n:"A witch and her beast in a glowing swamp.", imgs:[I("swamp-witch","A pale witch crouched beside a snarling beast in a misty green swamp")]},
+    {t:"Mountain Stair", k:"Matte painting", n:"A stone stairway climbing a cliff through the mist.", imgs:[I("concept2","Stone stairs carved into a misty mountain")]},
+    {t:"Under the Canopy", k:"Matte painting", n:"A lone figure below walkways strung between giant trees.", imgs:[I("concept1","Structures hanging between giant trees, with a small figure below")]},
+    {t:"Overpass", k:"Matte painting", n:"A broken highway overpass in an overgrown valley.", imgs:[I("bridge","Ruined concrete overpass in a dark forest")]},
+    {t:"Frozen Cliffs", k:"Matte painting", n:"Ice-covered rock stacks above a pale sky.", imgs:[I("ice-cliffs","Snow-covered rocky cliffs and a stone spire")]},
+  ]},
+  {id:"3d", nav:"3D", title:"3D <em>Projects</em>", note:"Vehicles, creatures and props, from sculpt and wireframe to final render. Click a project to see every image.", items:[
+    {t:"Ship", k:"Vehicle design", n:"A landing ship: final renders, pose sheets, silhouettes and wireframes.", imgs:[
+      I("ship-sky","The ship flying against a blue sky"),I("ship-desert-1","The ship landed in a desert"),I("ship-desert-2","The ship in the desert, another angle"),I("ship-desert-3","The ship in the desert, a third angle"),
+      I("ship-sheet-rest","Ship orthographic sheet, resting pose"),I("ship-sheet-flying","Ship orthographic sheet, flying pose"),I("ship-sheet-extended","Ship orthographic sheet, extended rest pose"),
+      I("ship-sil-1","Ship silhouettes, resting pose"),I("ship-sil-2","Ship silhouettes, flying pose"),I("ship-sil-3","Ship silhouettes, extended pose"),
+      I("ship-wire-1","Ship wireframe, top view"),I("ship-wire-2","Ship wireframe, front view"),I("ship-wire-3","Ship wireframe, side view")]},
+    {t:"Robot", k:"Mech design", n:"A two-legged walker robot, rendered in the studio.", imgs:[
+      I("robot-4","Studio render of the walker robot on white"),I("robot-1","Render of the walker robot on black"),I("robot-2","The walker robot trailing a cable"),I("robot-3","The walker robot, three-quarter view")]},
+    {t:"Dino", k:"Character · sculpt to render", n:"A cartoon T. rex, from the clay sculpt to the lit, textured render.", imgs:[
+      I("dino1","Grinning green cartoon dinosaur on black"),I("dino-closeup","Close-up of the dinosaur's face"),I("r-a2","The dinosaur in a lit scene, casting a shadow"),I("dino2","Green sculpt of the dinosaur"),I("dino-sculpt-grey","Untextured grey sculpt of the dinosaur")]},
+    {t:"Train", k:"Vehicle design", n:"A streamlined locomotive and its station.", imgs:[
+      I("train-1","Render of the streamlined train, side view"),I("train-2","Render of the train, three-quarter view"),I("train-3","Render of the train's engine section"),I("train-4","Render of the train, rear view"),I("train-station","Interior of a train station lit in red")]},
+    {t:"Dodge Viper", k:"Vehicle model", n:"A gold Dodge Viper, with interior, wireframe and UV layout.", imgs:[
+      I("car-1","Gold Dodge Viper render, three-quarter view"),I("car-2","Gold Dodge Viper under warm light"),I("car-3","Gold Dodge Viper, rear view"),I("car-4","Gold Dodge Viper, side view"),I("car-interior","Interior of the Dodge Viper"),I("car-wire","Wireframe of the Dodge Viper"),I("car-uv","UV texture layout for the Dodge Viper")]},
+    {t:"Ogre", k:"Creature sculpt", n:"A hunched ogre, sculpted and shown from all sides.", imgs:[
+      I("yellow","Two views of the ogre sculpt"),I("ogre-turnaround","Three-view turnaround of the ogre sculpt")]},
+    {t:"Laocoön Study", k:"Digital sculpt", n:"A sculpt of the head of Laocoön, from three angles.", imgs:[I("final","Three views of a digital sculpt of Laocoön's head")]},
+    {t:"Props", k:"Hard-surface models", n:"A stocked drinks cooler and a pair of gold bars.", imgs:[
+      I("pop-test-1","Glass-door drinks cooler full of bottles"),I("gold-bars","Two engraved gold bars")]},
+  ]},
+  {id:"characters", nav:"Characters", title:"2D <em>Characters</em>", note:"A cast of organ characters for an original series, plus a loris. Pencil and marker, digitally touched up.", items:[
+    {t:"The Brain", k:"Character sheet", n:"Pencil and marker, digitally touched up.", light:true, imgs:[I("cartoon-b-white","Character sheet of a cartoon brain with eyes, in several poses")]},
+    {t:"The Stomach", k:"Character sheet", n:"Pencil and marker, digitally touched up.", light:true, imgs:[I("cartoon-e-white","Character sheet of a cartoon stomach driving a wheeled cart")]},
+    {t:"The Heart", k:"Character sheet", n:"Pencil and marker, digitally touched up.", light:true, imgs:[I("cartoon-heart","Character sheet of a red cartoon heart, with sketches and turnaround views")]},
+    {t:"The Liver", k:"Character sheet", n:"Pencil and marker, digitally touched up.", light:true, imgs:[I("cartoon-liver","Character sheet of a tired green liver in a hat and tank top")]},
+    {t:"The Lung", k:"Character sheet", n:"Pencil and marker, digitally touched up.", light:true, imgs:[I("cartoon-lung","Character sheet of a green lung in a pink suit and hat, smoking a pipe")]},
+    {t:"Loris", k:"Pencil sketches", n:"A loris character, explored across four sketch pages.", light:true, imgs:[
+      I("loris-1","Pencil sketch of the loris character"),I("loris-2","Pencil sketch of the loris character"),I("loris-3","Pencil sketches of the loris"),I("loris-4","Pencil sketches of the loris in several poses")]},
+  ]},
+  {id:"traditional", nav:"Traditional", title:"Traditional <em>Art</em>", note:"Charcoal, pencil and pen from the live model, still life from observation, and oil.", groups:[
+    {name:"Oil paintings", items:[
+      {t:"Chicken Legs", k:"Oil · still life", n:"Oil painting from a still life setup.", imgs:[I("chicken","Raw chicken legs on a white tray against blue")]},
+      {t:"USS Arizona", k:"Oil · from photo", n:"Oil painting of the USS Arizona, from a photograph.", imgs:[I("arizona","The battleship USS Arizona")]},
+    ]},
+    {name:"Still life & studies", light:true, items:[
+      {t:"Tiger", k:"Pencil · from photo", n:"A tiger drawn from a photograph.", imgs:[I("tiger","Pencil drawing of a snarling tiger's head")]},
+      {t:"Garlic", k:"Pencil", n:"Drawn in pencil from still life.", imgs:[I("garlic","Pencil drawing of a head of garlic")]},
+      {t:"Onion", k:"Pencil", n:"Drawn in pencil from still life.", imgs:[I("onion","Pencil drawing of an onion")]},
+    ]},
+    {name:"Figure drawing", light:true, items:[
+      {t:"Seated Figure", k:"Charcoal", n:"Drawn from a live model in charcoal.", imgs:[I("charcoal-d","Charcoal drawing of a seated man on toned paper")]},
+      {t:"Model in Chair", k:"Charcoal", n:"Life drawing from a live model in charcoal.", imgs:[I("life-a","Charcoal life drawing of a seated woman")]},
+      {t:"Standing & Reclining", k:"Charcoal", n:"Drawn from live models in charcoal.", imgs:[I("hero","Charcoal drawings of a standing and a reclining figure")]},
+      {t:"20-Minute Pose", k:"Pencil", n:"Drawn from a live model in pencil.", imgs:[I("pose20-3","Pencil life drawing of a figure")]},
+      {t:"Charcoal Study I", k:"Charcoal", n:"Drawn from a live model in charcoal.", imgs:[I("charcoal-a","Charcoal life drawing of a figure")]},
+      {t:"Pencil Study", k:"Pencil", n:"Drawn from a live model in pencil.", imgs:[I("rb33","Pencil life drawing of a figure")]},
+      {t:"25-Minute Pose", k:"Charcoal", n:"Drawn from a live model in charcoal.", imgs:[I("pose25","Charcoal life drawing of a figure")]},
+      {t:"Life Drawing", k:"Charcoal", n:"Life drawing from a live model in charcoal.", imgs:[I("life-b","Charcoal life drawing of a figure")]},
+      {t:"Charcoal Study II", k:"Charcoal", n:"Drawn from a live model in charcoal.", imgs:[I("charcoal-b","Charcoal life drawing of a figure")]},
+      {t:"20-Minute Pose", k:"Charcoal & pen", n:"Drawn from a live model in charcoal and pen.", imgs:[I("pose20-6","Charcoal and pen life drawing of a figure")]},
+      {t:"Charcoal Study III", k:"Charcoal", n:"Drawn from a live model in charcoal.", imgs:[I("charcoal-c","Charcoal life drawing of a reclining figure")]},
+      {t:"5-Minute Pose", k:"Gesture", n:"A gesture drawing from a live model.", imgs:[I("pose5min","Quick gesture drawing of a figure")]},
+      {t:"5-Minute Pose", k:"Charcoal & pen", n:"Drawn from a live model in charcoal and pen.", imgs:[I("pose5min3","Quick charcoal and pen gesture drawing")]},
+    ]},
+  ]},
+];
+
+/* image sizes keep the layout from jumping while images load */
+const SIZE = {"snow-raid":[1800,990],"dragon-cliff":[1800,990],"sky-4-3":[2000,1411],"snow-raid":[1800,990],"where-1":[2000,1074],"swamp-witch":[1800,1549],"concept2":[2000,1478],"concept1":[2000,1099],"bridge":[2000,1232],"ice-cliffs":[1800,1711],"ship-sky":[1800,1012],"robot-4":[1800,1619],"cartoon-b-white":[1633,1278],"cartoon-e-white":[1632,1278],"cartoon-heart":[1366,1071],"cartoon-liver":[1364,1070],"cartoon-lung":[1364,1069],"dino1":[2000,1742],"train-1":[1800,1012],"car-1":[1800,1012],"yellow":[2000,1500],"final":[2000,1043],"pop-test-1":[2000,1125],"cartoon-b":[1800,1494],"cartoon-e":[1800,1494],"loris-4":[1440,1781],"chicken":[1800,1445],"arizona":[1330,1000],"tiger":[1365,1800],"garlic":[1799,1311],"onion":[1800,1410],"charcoal-d":[1800,1622],"life-a":[1308,1800],"hero":[1800,1211],"pose20-3":[1397,1799],"charcoal-a":[1308,1800],"rb33":[1409,1800],"pose25":[1492,1800],"life-b":[1800,1058],"charcoal-b":[1308,1800],"pose20-6":[1800,1404],"charcoal-c":[1800,1020],"pose5min":[1800,1308],"pose5min3":[1800,1308]};
+const COVER = {"Loris":3};  // which image fronts a project card (index)
+
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const ALL = []; // flat list of items with their section, for the viewer
+function card(item, light){
+  const idx = ALL.push(item) - 1;
+  const cover = item.imgs[COVER[item.t] || 0];
+  const [w,h] = SIZE[cover.src] || [1800,1012];
+  const multi = item.imgs.length > 1;
+  return `<article class="card${light||item.light?' light':''}">
+    <button type="button" data-i="${idx}" aria-label="Open ${esc(item.t)}${multi?`, ${item.imgs.length} images`:''}">
+      <div class="inner">
+        <div class="media"><img src="thumbs/${cover.src}.jpg" width="${w}" height="${h}" alt="${esc(cover.alt)}" decoding="async">
+          ${multi?`<span class="stack hud">${item.imgs.length}</span>`:''}</div>
+        <div class="meta"><h3>${esc(item.t)}</h3><span class="kind">${esc(item.k)}</span></div>
+        ${multi?`<p class="desc">${esc(item.n)}</p>`:''}
+      </div>
+    </button>
+  </article>`;
+}
+const countImgs = s => (s.items||s.groups.flatMap(g=>g.items)).reduce((a,i)=>a+i.imgs.length,0);
+const countItems = s => (s.items||s.groups.flatMap(g=>g.items)).length;
+
+document.getElementById("sections").innerHTML = SECTIONS.map(s=>{
+  const head = `<div class="sec-head"><div><h2 id="h-${s.id}">${s.title}</h2><p>${s.note}</p></div>
+    <span class="hud count">${s.id==="3d"?`${countItems(s)} projects · ${countImgs(s)} images`:`${countImgs(s)} pieces`}</span></div>`;
+  const body = s.items
+    ? `<div class="grid${s.layout==="wide"?" wide":""}">${s.items.map(i=>card(i)).join("")}</div>`
+    : s.groups.map(g=>`<h3 class="sub hud">${g.name}</h3><div class="grid">${g.items.map(i=>card(i,g.light)).join("")}</div>`).join("");
+  return `<section class="sec" id="${s.id}" aria-labelledby="h-${s.id}">${head}${body}</section>`;
+}).join("");
+
+document.getElementById("navlist").innerHTML = SECTIONS.map(s=>`<li><a href="#${s.id}">${s.nav}<b>${countImgs(s)}</b></a></li>`).join("")
+  + `<li class="nav-contact"><a href="#contact">Contact</a></li>`;
+document.getElementById("stats").innerHTML = [
+  [countItems(SECTIONS[0]),"Matte paintings"],[countItems(SECTIONS[1]),"3D projects"],[countImgs(SECTIONS[3]),"Traditional pieces"]
+].map(([n,l])=>`<div class="stat"><strong>${n}</strong><span>${l}</span></div>`).join("");
+
+/* viewer */
+const lb=document.getElementById("lb"), img=document.getElementById("lb-img"), thumbs=document.getElementById("lb-thumbs");
+let cur=null, pos=0;
+function render(){
+  const im=cur.imgs[pos];
+  img.src=`img/${im.src}.jpg`; img.alt=im.alt;
+  document.getElementById("lb-title").textContent=cur.t;
+  document.getElementById("lb-kind").textContent=cur.imgs.length>1?`${cur.k} · ${pos+1} / ${cur.imgs.length}`:cur.k;
+  document.getElementById("lb-note").textContent=cur.n;
+  document.getElementById("lb-prog").style.width=`${(pos+1)/cur.imgs.length*100}%`;
+  thumbs.querySelectorAll("button").forEach((b,i)=>b.setAttribute("aria-current", i===pos));
+  const a=thumbs.children[pos]; if(a) a.scrollIntoView({block:"nearest",inline:"center"});
+}
+function open(i, start=0){
+  cur=ALL[i]; pos=start;
+  const multi=cur.imgs.length>1;
+  thumbs.hidden=!multi;
+  document.querySelectorAll(".arrow").forEach(a=>a.hidden=!multi);
+  thumbs.innerHTML=multi?cur.imgs.map((m,k)=>`<button type="button" data-k="${k}" aria-label="Image ${k+1}"><img src="thumbs/${m.src}.jpg" alt=""></button>`).join(""):"";
+  render();
+  if(lb.showModal) lb.showModal(); else lb.setAttribute("open","");
+}
+const step=d=>{ if(cur.imgs.length<2) return; pos=(pos+d+cur.imgs.length)%cur.imgs.length; render(); };
+document.getElementById("sections").addEventListener("click",e=>{const b=e.target.closest("button[data-i]"); if(b) open(+b.dataset.i);});
+document.getElementById("splash").addEventListener("click",()=>open(0));
+thumbs.addEventListener("click",e=>{const b=e.target.closest("button[data-k]"); if(b){pos=+b.dataset.k; render();}});
+document.getElementById("lb-prev").onclick=()=>step(-1);
+document.getElementById("lb-next").onclick=()=>step(1);
+document.getElementById("lb-close").onclick=()=>lb.close();
+lb.addEventListener("click",e=>{ if(e.target===lb || e.target.classList.contains("lb-stage")) lb.close(); });
+lb.addEventListener("keydown",e=>{ if(e.key==="ArrowRight") step(1); if(e.key==="ArrowLeft") step(-1); });
+let tx=null; lb.addEventListener("touchstart",e=>tx=e.touches[0].clientX,{passive:true});
+lb.addEventListener("touchend",e=>{ if(tx===null) return; const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>50) step(dx<0?1:-1); tx=null; });
+
+document.getElementById("copy").addEventListener("click",async e=>{
+  const t=document.getElementById("email").textContent;
+  try{ await navigator.clipboard.writeText(t); e.target.textContent="Copied!"; }
+  catch(err){ const r=document.createRange(); r.selectNodeContents(document.getElementById("email")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); e.target.textContent="Selected, press ⌘C"; }
+  setTimeout(()=>e.target.textContent="Copy email",2200);
+});
+</script>
+
+</html>
